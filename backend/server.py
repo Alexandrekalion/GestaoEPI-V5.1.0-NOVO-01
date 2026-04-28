@@ -1524,8 +1524,8 @@ async def create_delivery(delivery_data: DeliveryCreate, current_user: dict = De
     if not employee:
         raise HTTPException(status_code=404, detail='Colaborador não encontrado')
     
-    # Verificar se colaborador tem foto cadastrada
-    if not employee.get('photo_path'):
+    # Verificar se colaborador tem foto cadastrada (apenas para entregas, não para devoluções)
+    if not delivery_data.is_return and not employee.get('photo_path'):
         raise HTTPException(status_code=400, detail='Colaborador não possui foto cadastrada. Procure o RH para cadastrar.')
     
     items_list = []
