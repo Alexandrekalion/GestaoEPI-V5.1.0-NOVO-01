@@ -62,10 +62,12 @@ A empresa utiliza o sistema **GestaoEPI v5.0.1** em produção, com 5 falhas ope
 - Devoluções (`is_return=true`) **não exigem mais** foto cadastrada (relaxado).
 - PDF da ficha agora mostra status biométrico do colaborador.
 - PDF de entregas e ficha mostram tamanho dos itens entregues.
+- **[28/04/2026 — fix iter_3]** Aba "Biometria Facial" do colaborador que recusou agora bloqueia também a seção de upload de foto (não apenas o template) — bug LGPD identificado e corrigido pelo testing_agent.
 
 ### ✅ Validação
 - **Backend:** 17/17 testes automatizados passaram (testing_agent_v3 — `/app/test_reports/iteration_1.json`).
-- **Frontend:** Login carrega; formulários compilam sem lint errors.
+- **Frontend:** 15/15 testes E2E passaram (`/app/test_reports/iteration_2.json` + `/app/test_reports/iteration_3.json`).
+- **Reconhecimento facial em si:** depende de webcam real, não automatizável — recomenda-se teste manual com 2-3 colaboradores cadastrados.
 
 ## 6. Backlog / Próximos passos
 
