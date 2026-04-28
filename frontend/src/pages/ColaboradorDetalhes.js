@@ -1418,7 +1418,24 @@ export default function ColaboradorDetalhes() {
               <ScanFace className="w-5 h-5 text-blue-600" />
               Cadastro de Biometria Facial
             </h3>
-            
+
+            {/* BLOQUEIO LGPD GLOBAL na aba Biometria: se colaborador recusou, exibe APENAS o banner de bloqueio */}
+            {colaborador.facial_consent === false && colaborador.facial_consent_date ? (
+              <div className="p-6 bg-red-50 border border-red-200 rounded-lg text-center" data-testid="biometric-blocked-banner">
+                <ShieldCheck className="w-10 h-10 text-red-500 mx-auto mb-3" />
+                <p className="text-red-700 font-bold text-lg">
+                  Cadastro de biometria bloqueado
+                </p>
+                <p className="text-sm text-red-600 mt-2 max-w-md mx-auto">
+                  Este colaborador NÃO aceitou o uso de biometria facial conforme registrado em{' '}
+                  <strong>{new Date(colaborador.facial_consent_date).toLocaleDateString('pt-BR')}</strong>.
+                </p>
+                <p className="text-xs text-red-600 mt-3 italic">
+                  Captura de foto, upload de imagem e cadastro de template facial estão bloqueados em conformidade com a LGPD.
+                </p>
+              </div>
+            ) : (
+              <>
             {/* Seção de Foto do Colaborador */}
             <div className="mb-6 p-4 bg-slate-50 border border-slate-200 rounded-lg">
               <h4 className="font-medium text-slate-700 mb-3 flex items-center gap-2">
@@ -1623,20 +1640,6 @@ export default function ColaboradorDetalhes() {
             <div className="border-t pt-6">
               <h4 className="font-medium text-slate-700 mb-3">Cadastrar Novo Template via Câmera</h4>
 
-              {/* BLOQUEIO LGPD: se colaborador recusou explicitamente, esconde toda a captura */}
-              {colaborador.facial_consent === false && colaborador.facial_consent_date ? (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-center" data-testid="biometric-blocked-banner">
-                  <ShieldCheck className="w-8 h-8 text-red-500 mx-auto mb-2" />
-                  <p className="text-red-700 font-medium">
-                    Cadastro de biometria bloqueado
-                  </p>
-                  <p className="text-sm text-red-600 mt-1">
-                    Este colaborador NÃO aceitou o uso de biometria facial conforme registrado em{' '}
-                    {new Date(colaborador.facial_consent_date).toLocaleDateString('pt-BR')}.
-                  </p>
-                </div>
-              ) : (
-                <>
               {!colaborador.photo_path && (
                 <div className="p-4 bg-slate-100 rounded-lg text-center">
                   <p className="text-slate-600">Cadastre uma foto do colaborador primeiro para poder capturar o template facial.</p>
@@ -1820,9 +1823,9 @@ export default function ColaboradorDetalhes() {
                   </div>
                 </div>
               )}
-                </>
-              )}
             </div>
+              </>
+            )}
           </div>
         </div>
 
