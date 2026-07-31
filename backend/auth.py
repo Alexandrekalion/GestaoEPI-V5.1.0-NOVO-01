@@ -8,7 +8,9 @@ from database import get_db
 from bson import ObjectId
 import os
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'cipolatti-secret-key-production-2026-emerald')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    raise RuntimeError('SECRET_KEY environment variable is required')
 ALGORITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 480
 

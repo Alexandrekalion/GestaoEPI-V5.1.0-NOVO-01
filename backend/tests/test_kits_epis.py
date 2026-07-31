@@ -8,6 +8,8 @@ import requests
 import os
 
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
+ADMIN_USERNAME = os.environ.get("TEST_ADMIN_USERNAME", "administrador")
+ADMIN_PASSWORD = os.environ.get("TEST_ADMIN_PASSWORD", "")
 
 class TestKitsAndEPIs:
     """Test Kits and EPIs endpoints"""
@@ -20,8 +22,8 @@ class TestKitsAndEPIs:
         
         # Login
         login_response = self.session.post(f"{BASE_URL}/api/auth/login", json={
-            "username": "administrador",
-            "password": "LR1a2b3c4567@"
+            "username": ADMIN_USERNAME,
+            "password": ADMIN_PASSWORD
         })
         assert login_response.status_code == 200, f"Login failed: {login_response.text}"
         token = login_response.json().get("access_token")
