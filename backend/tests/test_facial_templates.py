@@ -10,8 +10,8 @@ import json
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 
 # Test credentials
-ADMIN_USERNAME = os.environ.get("TEST_ADMIN_USERNAME", "administrador")
-ADMIN_PASSWORD = os.environ.get("TEST_ADMIN_PASSWORD", "")
+ADMIN_USERNAME = "administrador"
+ADMIN_PASSWORD = "LR1a2b3c4567@"
 
 # Known employee IDs from seed data
 EMPLOYEE_ID_1 = "6985f99e1d8c786d2c082a15"  # alexandre santana dos santos

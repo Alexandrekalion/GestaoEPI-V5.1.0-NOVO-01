@@ -86,23 +86,9 @@ frontend/node_modules/.cache/default-development/6.pack
 # Environment and credential files
 .env
 .env.*
-!.env.example
 *.env
-!*.env.example
 credentials.json
 *.pem
 *.key
 .credentials
-backend/uploads/
-backend/backups/
-uploads/
-backups/
-memory/
-memory_v509/
-test_reports/
-test_result.md
-*.sqlite
-*.sqlite3
-*.db
-*.bak
 frontend/node_modules/.cache/default-development/7.pack

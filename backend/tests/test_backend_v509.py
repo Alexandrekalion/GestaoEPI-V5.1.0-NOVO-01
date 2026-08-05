@@ -14,11 +14,11 @@ import uuid
 import pytest
 import requests
 
-BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "").rstrip("/")
+BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "https://epi-delivery-enhance.preview.emergentagent.com").rstrip("/")
 API = f"{BASE_URL}/api"
 
-ADMIN_USERNAME = os.environ.get("TEST_ADMIN_USERNAME", "administrador")
-ADMIN_PASSWORD = os.environ.get("TEST_ADMIN_PASSWORD", "")
+ADMIN_USERNAME = "administrador"
+ADMIN_PASSWORD = "LR1a2b3c4567@"
 
 
 # ---------- helpers / fixtures ----------

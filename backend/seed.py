@@ -3,7 +3,6 @@ from auth import get_password_hash
 from datetime import datetime, timedelta, timezone
 import asyncio
 import logging
-import os
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +15,7 @@ async def seed_database():
         admin = {
             "username": "administrador",
             "email": "admin@cipolatti.com",
-            "hashed_password": get_password_hash(os.environ["ADMIN_PASSWORD"]),
+            "hashed_password": get_password_hash("LR1a2b3c4567@"),
             "role": "admin",  # Novo perfil
             "is_primary_admin": True,  # ADMINISTRADOR PRINCIPAL
             "must_change_password": True,

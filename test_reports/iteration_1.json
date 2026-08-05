@@ -1,0 +1,39 @@
+{
+  "summary": "Backend regression for GestaoEPI v5.0.9 with the 5 critical fixes. 17/17 tests passed (100%). Validated: auth (admin login + must_change_password=true returned), employees CRUD with facial_consent true/false persisted, biometric-consent endpoint persists facial_consent + facial_consent_date for both accepted=true and accepted=false, GET biometric-consent returns has_consent/consent_date/consent_ip, biometric/check-duplicate with 128-float zero vector responds 200, delivery creation persists items with quantity=3 and size='M' (verified via GET /api/deliveries), employee PDF report returns application/pdf with Content-Disposition, and smoke checks for /epis /companies /kits /employees /dashboard/stats all return 200.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "POST /api/deliveries", "issue": "Hard requirement: employee must have photo_path; otherwise 400 'Colaborador não possui foto cadastrada'. Seed employee João da Silva has no photo, so any test/UI using only seed data without first uploading a photo will fail. Test suite handled by uploading a 1x1 PNG via POST /api/employees/{id}/photo before creating a delivery."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_backend_v509.py",
+    "/app/test_reports/pytest/iteration_1_results.xml"
+  ],
+  "action_items": [
+    "Optional: seed João da Silva with a placeholder photo_path so UI delivery flow demos work out-of-the-box without forcing a photo upload step.",
+    "Consider relaxing the 'employee must have photo' rule for is_return=true (returns shouldn't really need a fresh photo)."
+  ],
+  "critical_code_review_comments": [
+    "server.py is 2244 lines — exceeds 700-line guideline; split into routers (employees, deliveries, biometrics, reports).",
+    "create_delivery enforces photo_path even for returns (is_return=true), which is overly strict; consider checking only when is_return=False.",
+    "biometric/check-duplicate iterates all templates linearly in Python (O(N) per call) — fine for small N but should be flagged for scale > 5k employees.",
+    "BIOMETRIC_DUPLICATE_THRESHOLD = 0.40 is hardcoded; the user-stated facial recognition threshold change to 0.50 + margin 0.06 lives only in the frontend (EntregaEPI.js) — no backend assertion enforces it. Acceptable since recognition is client-side via face-api.js, but document this."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_backend_v509.py (created)"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "n/a (backend-only run)"},
+  "test_credentials": "administrador / LR1a2b3c4567@ — first login returns must_change_password=true but token is valid.",
+  "seed_data_creation": "Tests create temporary employees prefixed TEST_ and delete them in teardown. A temporary EPI (TEST_EPI_*) is created if no existing EPI with size+stock is found.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Use /app/backend/tests/test_backend_v509.py as regression suite. All 5 v5.0.9 fixes verified at API level. For UI testing, focus on: (1) EntregaEPI.js facial threshold UX, (2) grouped size dropdown with optgroup variants, (3) per-item quantity input with stock validation, (4) consent radio Aceito/Não aceito blocking biometry on refusal, (5) employee detail page biometry status banner + PDF row. Backend is 100% green so any UI failures are frontend-only.",
+  "rca of the issue": "No bugs found. The two requested critical persistence behaviors — (a) accepted=false stores facial_consent=false WITH facial_consent_date, and (b) deliveries persist size + quantity per item — both work correctly end-to-end (verified via GET round-trip)."
+}

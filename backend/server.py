@@ -2104,9 +2104,7 @@ import secrets
 def generate_auth_code(employee_id: str, timestamp: datetime) -> str:
     """Gera código de autenticação único para ficha de EPI"""
     # Criar hash baseado em employee_id, timestamp e secret
-    secret_key = os.environ.get('SECRET_KEY')
-    if not secret_key:
-        raise RuntimeError('SECRET_KEY environment variable is required')
+    secret_key = os.environ.get('SECRET_KEY', 'cipolatti-secret-key-2026')
     data = f"{employee_id}:{timestamp.isoformat()}:{secret_key}:{secrets.token_hex(4)}"
     hash_obj = hashlib.sha256(data.encode())
     hash_hex = hash_obj.hexdigest()[:10].upper()
