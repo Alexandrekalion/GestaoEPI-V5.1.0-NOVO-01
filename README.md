@@ -81,6 +81,6 @@ Versao recente da familia GestaoEPI. Deve ser comparada com `GestorEPI-multiempr
 
 ## Autor
 
-Desenvolvido por Michele Santana — Kalion Tecnologia
+Desenvolvido por Alexandre Santana dos Santos — Kalion Tecnologia
 
 Perfil profissional: https://github.com/Tr3mbolon4
